@@ -1,0 +1,7 @@
+transformers>=4.40
+datasets>=2.19
+evaluate
+scikit-learn
+peft
+accelerate
+matplotlib
