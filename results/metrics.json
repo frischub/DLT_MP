@@ -4,6 +4,8 @@
   "max_length": 128,
   "test_accuracy": 0.8214492753623188,
   "test_macro_f1": 0.7977035757692061,
-  "baseline_majority_f1": 0.40611353711790393,
-  "baseline_tfidf_f1": 0.5677796523717974
+  "baseline_majority_test_accuracy": 0.664927536231884,
+  "baseline_majority_test_macro_f1": 0.3993732590529248,
+  "baseline_tfidf_test_accuracy": 0.7107246376811595,
+  "baseline_tfidf_test_macro_f1": 0.5745159904678532
 }
