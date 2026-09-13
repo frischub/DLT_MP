@@ -1,4 +1,4 @@
-# Modulprojekt DLT -- BERT-Finetuning
+# Modulprojekt DLT - BERT-Finetuning
 
 Dieses Repository enthält die Abgabe des Modulprojekts mit **Teil A**
 und **Teil B**.
@@ -14,7 +14,7 @@ Für beide Teile wird das **DistilBERT (`distilbert-base-uncased`)**-Modell verw
 ## Repository-Struktur
 
 ``` text
-.
+DLT_MP
 ├── finetune_starter.ipynb
 ├── finetune_mrpc.ipynb
 ├── README.md
