@@ -5,3 +5,6 @@ scikit-learn
 peft
 accelerate
 matplotlib
+numpy
+scipy
+pandas
