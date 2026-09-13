@@ -1,21 +1,34 @@
-# Modulprojekt DLT – BERT-Finetuning (Starter-Kit)
+# Modulprojekt DLT -- BERT-Finetuning
 
-Feintuning eines BERT-Modells für klassische NLP-Aufgaben. Das mitgelieferte Notebook zeigt die komplette Pipeline für **Sentiment-Klassifikation** auf dem
-`cornell-movie-review-data/rotten_tomatoes`-Datensatz. Läuft auf der kostenlosen Colab-Stufe (oder CPU).
+Dieses Repository enthält die Abgabe des Modulprojekts mit **Teil A**
+und **Teil B**.
 
-**Umfang:** ca. 2 ECTS (~60 Stunden Arbeitszeit).
+-   **Teil A:** Sentiment-Klassifikation auf
+    `cornell-movie-review-data/rotten_tomatoes`
+-   **Teil B:** Satzpaar-Klassifikation auf `nyu-mll/glue` mit der
+    Konfiguration `mrpc`
 
-## Inhalt
+Für beide Teile wird das **DistilBERT (`distilbert-base-uncased`)**-Modell verwendet.
+
+
+## Repository-Struktur
+
+``` text
+.
+├── finetune_starter.ipynb
+├── finetune_mrpc.ipynb
+├── README.md
+├── requirements.txt
+├── results/
+    ├── metrics_starter.json
+    ├── metrics.json
+    └── learning_curve.json
 
 ```
-starter_kit/
-├── finetune_starter.ipynb   # Colab-fertiges Notebook (die komplette Pipeline)
-├── README.md                # diese Datei
-├── RUBRIC.md                # Bewertungsraster
-└── report/
-    ├── report.tex           # Bericht in der ACL-Vorlage (vorausgefüllte Abschnitte)
-    └── custom.bib           # Literaturverzeichnis
-```
+
+Die beiden Notebooks enthalten die ausgeführten Bearbeitungen von Teil A
+und Teil B. Im Verzeichnis `results/` befinden sich die erzeugten
+Ergebnisdateien. 
 
 ## Die Aufgabe
 
@@ -46,61 +59,68 @@ Was in Teil B verlangt ist:
   **und** LoRA-Vergleich), sauber ausgewertet.
 - Fehleranalyse für die neue Aufgabe.
 
-## Was Sie abgeben
+## Reproduktion Teil B
 
-- Link zu **Code-Repository** (z. B. GitHub, Git.UP): darin **beide** ausgeführte Notebooks — auch das Teil-A-Notebook (`rotten_tomatoes`) mit Ihren initialen Untersuchungen — sowie das Teil-B-Notebook, `results/*.json`, `requirements.txt` und dieses README mit der genauen Reproduktionsanweisung. Das trainierte Modell **nicht** committen (zu groß). (Link in separate Text-Datei `repository.txt` einfügen und diese über Moodle einreichen.)
-- **Bericht** (PDF, ACL-Vorlage, max. ~6 Seiten): siehe `report/report.tex`.
-  Der Bericht behandelt **ausschließlich Teil B**. Teil A wird **nicht** im Bericht beschrieben, das Notebook aber trotzdem ausgeführt eingereicht. Über Moodle abgeben.
+Das Notebook kann entweder in **Google Colab** oder in einer **lokalen Python-Umgebung** ausgeführt werden. Die benötigten Python-Pakete sind in `requirements.txt` definiert.
 
-## Schnellstart
+### Option 1: Google Colab
 
-1. Öffnen Sie `finetune_starter.ipynb` in [Google Colab](https://colab.research.google.com/).
-2. *Laufzeit → Laufzeittyp ändern → T4 GPU* (optional, aber schneller).
-3. Zellen der Reihe nach ausführen. Der `pip install`-Schritt läuft nur einmal.
+1. Öffnen Sie das Notebook `finetune_mrpc.ipynb` in [Google Colab](https://colab.research.google.com/).
 
-> **Colab-Hinweis:** Vorinstallierte Pakete kollidieren gelegentlich mit aktuellen Bibliotheksversionen (torchvision, torchao …). Die Einrichtungszelle (Abschnitt 0) behebt die bekannten Fälle.
+2. Für das Fine-Tuning wird die Verwendung einer GPU empfohlen. In Colab kann diese unter **Laufzeit → Laufzeittyp ändern → T4 GPU** aktiviert werden.
+
+3. Die benötigten Pakete werden direkt im Notebook installiert.
+
+4. Zellen der Reihe nach ausführen.
+
+### Option 2: Lokale Ausführung
 
 
-## Pipeline (Notebook-Abschnitte)
+Repository klonen und in das Projektverzeichnis wechseln:
 
-0. Einrichtung · 1. Daten inspizieren · 2. Baselines (Majority, TF-IDF+LogReg) · 3. Tokenisierung · 4. Feintuning mit `Trainer` · 5. Test-Evaluation
-(Accuracy + Macro-F1, Confusion-Matrix) · 6. Fehleranalyse · 7. LoRA · 8. Untersuchungen (Lernkurve u. a.) · 9. Ergebnisse speichern.
-
-## Bewertung
-
-Siehe `RUBRIC.md`. Kurz: Teil A ist Gerüst (wenige Punkte); die Punkte liegen in der **Übertragung (Teil B)**, den **Untersuchungen** und dem **Bericht**.
-
-## ACL-Vorlage
-
-Legen Sie auf Overleaf ein neues Projekt aus der offiziellen **ACL**-Vorlage an
-(dort sind `acl.sty` und `acl_natbib.bst` enthalten) und ersetzen Sie die Haupt-`.tex`
-durch `report/report.tex`. Style-Dateien alternativ:
-<https://github.com/acl-org/acl-style-files>.
-
-## Datensätze im Überblick
-
-| Aufgabe | Datensatz-ID (Hugging Face) | Aufgabenart | Rolle |
-|---|---|---|---|
-| Sentiment | `cornell-movie-review-data/rotten_tomatoes` | Einzelsatz-Klassifikation | Teil A (Vorlage) |
-| Paraphrase | `nyu-mll/glue` (Konfig. `mrpc`) | Satzpaar-Klassifikation | Teil B, Tier 1 |
-| NLI | `stanfordnlp/snli` oder `nyu-mll/multi_nli` (Teilmenge) | Satzpaar-Klassifikation | Teil B, Tier 1 |
-| NER | `tomaarsen/conll2003` | Token-Klassifikation | Teil B, Tier 2 |
-
-> Bei `nyu-mll/glue` wird die Aufgabe über die Konfiguration gewählt, z. B.
-> `load_dataset("nyu-mll/glue", "mrpc")`. `nyu-mll/multi_nli` hat keine
-> `test`-Splits mit Labels – nutzen Sie `validation_matched` zum Testen.
-
-```
-requirements.txt:
-transformers>=4.40
-datasets>=2.19
-evaluate
-scikit-learn
-peft
-accelerate
-seqeval        # nur für Teil B, Tier 2 (NER)
+```bash
+git clone https://github.com/frischub/DLT_MP.git
+cd DLT_MP
 ```
 
+Virtuelle Umgebung erstellen:
+
+```bash
+python -m venv .venv
+```
+
+Umgebung unter Linux/macOS aktivieren:
+
+```bash
+source .venv/bin/activate
+```
+
+Unter Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+Anschließend die Abhängigkeiten installieren:
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Falls Jupyter noch nicht installiert ist, kann es zusätzlich installiert werden:
+
+```bash
+pip install jupyter
+```
+
+Danach Jupyter starten:
+
+```bash
+jupyter notebook
+```
+
+Im Browser kann anschließend `finetune_mrpc.ipynb` geöffnet und vollständig ausgeführt werden.
 
 
-(Erstellt mit Hilfe von KI-Tools; gesteuert und durchgesehen von David Schlangen. Juli 2026.)
+
